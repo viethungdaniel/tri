@@ -1,0 +1,79 @@
+body {
+    background-color: #121212;
+}
+.container {
+    margin-top: 20px;
+}
+.form-control {
+    background-color: #121212;
+    color: #ddd;
+    height: 1.4375em;
+    padding: 16.5px 14px;
+    border: 1px solid gray;
+}
+.form-control:hover {
+    border: 1px solid #fff;
+}
+
+.form-group {
+    position: relative;
+}
+
+label {
+    position: absolute;
+    top: 10%;
+    left: 2%;
+    color: gray;
+    background-color: #121212;
+    transition: .1s all ease-out;
+}
+label:hover {
+    color: #fff;
+}
+input[type=text]:focus {
+    background-color: #121212;
+}
+input:focus + label, input:valid + label {
+    color: #90CAF9;
+    font-size: 1em;
+    top: -15px;
+    left: 5px;
+    transform: scale(0.8);
+    transition: .2s ease-in-out;
+ }
+ .button-submit {
+    position: relative;
+ }
+ .button-submit button {
+    /* position: absolute; */
+    width: 100%;
+    margin-top: 20px;
+ }
+ .button-submit .btn {
+    background-color: #90CAF9;
+    color: #121212;
+ }
+ .button-submit .btn:hover {
+    background-color: #42A5F5;
+ }
+ .file-upload {
+    display: flex;
+ }
+ .file-upload button {
+    margin: auto;
+    display:block;
+    width:150px;
+    height:30px;
+    text-align: center;
+    background-color: #90CAF9;
+    border: none;
+    border-radius: 5px;
+ }
+input[type=checkbox] {
+    accent-color: #42A5F5;
+    background-color: #121212;
+}
+.form-check-label {
+    margin-left: 5px;
+    color: #fff;
+}

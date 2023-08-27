@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <form action="">
+      <div id="error-message" style="background-color: red;text-align: center;color:white;margin-bottom: 16px;">
+      
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="Name" id="name" required onchange="handleChange('name')">
+        <label for="name">Name*</label>
+      </div>
+  
+      <div class="form-group">
+        <input type="text" class="form-control" name="Email" id="email" required onchange="handleChange('email')">
+        <label for="email">Email*</label>
+      </div>
+  
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" name="CheckBox" id="force_slow_checked" value="checkedValue" onchange="handleForceCheckChange()">
+          Force slow to checks for concurrent requests
+        </label>
+      </div>
+      <div class="form-group file-upload" style="padding-top: 50px;">
+        <button type="button" onclick="document.querySelector('#avatar_file').click()" id="uploadButton">UPLOAD AVATAR</button>
+        <input type='file' id="avatar_file" style="display: none;"  onchange="handleFileChange()">
+        <!--  -->
+      </div>
+      <div id="uploaded_file" style="color: white"> 
+          
+      </div>
+    </form>
+
+    <div class="button-submit">
+      <button type="submit" class="btn btn-primary" id="submitButton" onclick="handleSubmit()">Submit</button>
+    </div>
+
+  </div>
+  </div>
+
+  <script>
+    const formValues = { 
+      name: "",
+      email: "",
+      force_slow_checked: false,
+      avatar_file: null
+    }
+
+    const errorMessageEl = document.querySelector("#error-message")
+
+    const handleChange  = (inputId) => {
+      const inputEl = document.querySelector(`#${inputId}`)
+      const value = inputEl.value
+      inputEl.value = `${value}`
+      formValues[inputId] = value
+     
+    }
+
+    const handleForceCheckChange  = () => {
+      const inputEl = document.querySelector(`#force_slow_checked`)
+      const checked = inputEl.checked
+      formValues["force_slow_checked"] = checked
+    }
+
+    const handleFileChange = () => {
+      const inputEl = document.querySelector(`#avatar_file`)
+      const file = inputEl.files[0]
+      const uploadedFileEl = document.querySelector("#uploaded_file")
+      uploadedFileEl.innerHTML = file.name
+      formValues["avatar_file"] = file
+      inputEl.value = ""
+    }
+
+    const validateRequiredField = (value,errorMessage) => { 
+      if (value === "") {
+        errorMessageEl.innerHTML = errorMessage
+        return  false
+      }
+      return  true
+    }
+
+    const validateEmail = async (email) => {
+        return !!String(email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          ) ;
+      };
+
+
+    const handleSubmit = () =>{ 
+      errorMessageEl.innerHTML = "";
+      const validName = validateRequiredField(formValues.name,"Name required")
+      if (!validName) return
+      const validEmail = validateRequiredField(formValues.email,"Email required")
+      if (!validEmail) return
+
+      const validEmail1 = validateEmail(formValues.email) // kiem tra email co hop le hay k
+      if (!validEmail1) {
+        errorMessageEl.innerHTML = "Email meo hop le"
+        return  false
+
+      }
+
+
+      const form = new FormData()
+
+      form.append("name",formValues.name)
+      form.append("email",formValues.email)
+      form.append("force_slow_checked",formValues.force_slow_checked)
+      form.append("avatar_file",formValues.avatar_file)
+      // done client
+      console.log(form.get("name"))
+
+      // const response =  await fetch("url",{
+      //   method: "POST",
+      //   body: form
+      // })
+      // console.log("response",response)
+
+    }
+
+  </script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="./assets/js/javaScript.js"></script>
+</body>
+
+</html>
